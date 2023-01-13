@@ -53,11 +53,6 @@ function onImageClick(evt) {
 
     instance.show();
 
-    const visible = instance.visible();
-    if(!visible) {
-        document.removeEventListener('keydown', onEscKeyPress);
-    }
-
     function onEscKeyPress (evt) {
         if(evt.code === 'Escape') {
             instance.close();
