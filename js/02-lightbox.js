@@ -6,8 +6,6 @@ console.log(galleryItems);
 const galleryContainer = document.querySelector('.gallery');
 const galleryMarkup = createGalleryMarcup(galleryItems);
 
-galleryContainer.addEventListener('click', onGalleryContainerClick);
-
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
 function createGalleryMarcup(items) {
@@ -24,16 +22,8 @@ function createGalleryMarcup(items) {
     }).join('');
 };
 
-function onGalleryContainerClick(evt) {
-    evt.preventDefault();
-    const imageEl = evt.target.classList.contains('gallery__image');
-    
-    if(!imageEl) {
-        return;
-    }
+new SimpleLightbox('.gallery a', {       
+    captionDelay: 250,
+    captionsData: 'alt',
+});
 
-    new SimpleLightbox('.gallery a', {       
-        captionDelay: 250,
-        captionsData: 'alt',
-    });
-}

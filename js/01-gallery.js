@@ -6,7 +6,7 @@ import { galleryItems } from './gallery-items.js';
 const galleryContainer = document.querySelector('.gallery');
 const galleryMarkup = createGalleryMarcup(galleryItems);
 
-galleryContainer.addEventListener('click', onGalleryContainerClick);
+galleryContainer.addEventListener('click', onImageClick);
 
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 
@@ -27,7 +27,7 @@ function createGalleryMarcup(items) {
     }).join('');
 };
 
-function onGalleryContainerClick(evt) {
+function onImageClick(evt) {
     evt.preventDefault();
     const imageEl = evt.target.classList.contains('gallery__image');
     
@@ -42,24 +42,21 @@ function onGalleryContainerClick(evt) {
             height="600"
         />
     `, {
-        onShow: onModalShow,
-        onClose: onModalClose,
+            onShow: (instance) => {
+                galleryContainer.addEventListener('keydown', onEscKeyPress);
+            },
+            onClose: (instance) => {
+                galleryContainer.removeEventListener('keydown', onEscKeyPress);
+            },
         }
     );
 
     instance.show();
 
-    function onModalShow() {
-        window.addEventListener('keydown', onEscKeyPress);
-    };
-
-    function onModalClose() {
-        window.removeEventListener('keydown', onEscKeyPress);
-    };
-
     function onEscKeyPress (evt) {
         if(evt.code === 'Escape') {
             instance.close();
         }
+        console.log(evt.code)
     };
 }
